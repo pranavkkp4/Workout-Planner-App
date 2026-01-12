@@ -181,7 +181,7 @@ export default function App() {
       <div className="header">
         <div className="brand">
           <h1 className="h1">Workout Planner</h1>
-          <div className="badge">Black • Gold • Silver</div>
+          <div className="badge">Workout Planning Dashboard</div>
         </div>
 
         <div className="row">
