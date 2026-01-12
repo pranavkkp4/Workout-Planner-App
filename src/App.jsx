@@ -61,6 +61,9 @@ export default function App() {
           daysOfWeek.map((d) => [d, Array.isArray(parsed.planByDay[d]) ? parsed.planByDay[d] : []])
         );
         setPlanByDay(normalized);
+      } else{
+        setPlanByDay(Object.fromEntries(daysOfWeek.map((d) => [d, []])));
+        
       }
     } catch {
       // Ignore parse errors; start fresh
