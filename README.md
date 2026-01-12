@@ -60,7 +60,7 @@ workout-planner-app/
 
 ## Documentation
 
-The `docs/report.tex` file in this repository contains a LaTeX report that explains the concepts of **KPI programming** and **Agile/Scrum** development.  It also includes diagrams illustrating the Scrum workflow and examples of how KPIs can be visualised.  You can compile it using a LaTeX toolchain such as `pdflatex` or an online editor like Overleaf.
+The `docs/report.pdf` file in this repository contains a PDF report that explains the concepts of **KPI programming** and **Agile/Scrum** development.  It also includes diagrams illustrating the Scrum workflow and examples of how KPIs can be visualised.  
 
 ## License
 
