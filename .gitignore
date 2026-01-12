@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Production build
+dist/
+
+# System files
+.DS_Store
+*.log
+
+# Vite cache
+.vite/
+
+# Optional
+*.env
