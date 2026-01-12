@@ -56,9 +56,11 @@ export default function App() {
       if (Array.isArray(parsed.workouts)) setWorkouts(parsed.workouts);
 
       if (parsed.planByDay && typeof parsed.planByDay === 'object') {
-        // Ensure all days exist
         const normalized = Object.fromEntries(
-          daysOfWeek.map((d) => [d, Array.isArray(parsed.planByDay[d]) ? parsed.planByDay[d] : []])
+          daysOfWeek.map((d) => [
+            d,
+            Array.isArray(parsed.planByDay[d]) ? parsed.planByDay[d] : [],
+          ])
         );
         setPlanByDay(normalized);
       }
@@ -73,7 +75,7 @@ export default function App() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   }, [workouts, planByDay]);
 
-  // --- Derived KPIs ---
+  // --- Derived KPIs (aligned with kpi.js) ---
   const kpis = useMemo(() => computeKPIs({ workouts, planByDay }), [workouts, planByDay]);
 
   // --- Handlers ---
@@ -141,10 +143,8 @@ export default function App() {
   }
 
   function deleteWorkout(workoutId) {
-    // Remove from workouts
     setWorkouts((prev) => prev.filter((w) => w.id !== workoutId));
 
-    // Also remove from any day assignments
     setPlanByDay((prev) => {
       const next = {};
       for (const day of daysOfWeek) {
@@ -158,6 +158,7 @@ export default function App() {
   }
 
   function clearAll() {
+    // eslint-disable-next-line no-restricted-globals
     if (!confirm('Clear all workouts and the weekly plan? This cannot be undone.')) return;
     setWorkouts([]);
     setPlanByDay(Object.fromEntries(daysOfWeek.map((d) => [d, []])));
@@ -249,7 +250,13 @@ export default function App() {
             </div>
 
             {error ? (
-              <div className="pill" style={{ borderColor: 'rgba(255,90,106,0.45)', color: 'rgba(255,255,255,0.9)' }}>
+              <div
+                className="pill"
+                style={{
+                  borderColor: 'rgba(255,90,106,0.45)',
+                  color: 'rgba(255,255,255,0.9)',
+                }}
+              >
                 {error}
               </div>
             ) : null}
@@ -264,7 +271,7 @@ export default function App() {
           </form>
         </section>
 
-        {/* --- Assign Workout --- */}
+        {/* --- Assign Workout + KPIs --- */}
         <section className="card">
           <h2 className="cardTitle">Assign to Day</h2>
 
@@ -291,7 +298,13 @@ export default function App() {
             </select>
 
             {error ? (
-              <div className="pill" style={{ borderColor: 'rgba(255,90,106,0.45)', color: 'rgba(255,255,255,0.9)' }}>
+              <div
+                className="pill"
+                style={{
+                  borderColor: 'rgba(255,90,106,0.45)',
+                  color: 'rgba(255,255,255,0.9)',
+                }}
+              >
                 {error}
               </div>
             ) : null}
@@ -308,8 +321,8 @@ export default function App() {
 
             <div className="kpiRow">
               <div className="kpi">
-                <div className="kpiLabel">Workouts created</div>
-                <div className="kpiValue">{kpis.totalWorkouts}</div>
+                <div className="kpiLabel">Workouts in library</div>
+                <div className="kpiValue">{kpis.totalWorkoutsDefined}</div>
               </div>
               <div className="kpi">
                 <div className="kpiLabel">Assignments (week)</div>
@@ -403,7 +416,7 @@ export default function App() {
         </section>
       </div>
 
-      {/* --- Workout Library (optional but useful) --- */}
+      {/* --- Workout Library --- */}
       <div style={{ marginTop: 14 }} className="card">
         <h2 className="cardTitle">Workout Library</h2>
 
